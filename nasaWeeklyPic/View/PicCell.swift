@@ -9,6 +9,10 @@ import UIKit
 import SnapKit
 import Moya
 
+protocol PicCellDelegate: AnyObject {
+    func picCell(_ picCell: PicCell, needsUpdateWith closure: () -> Void)
+}
+
 class PicCell: UITableViewCell {
     
     private lazy var nasaImageView: UIImageView = {
@@ -19,19 +23,31 @@ class PicCell: UITableViewCell {
         return imageView
     }()
     
-    private var aspectRatioConstraint: NSLayoutConstraint?
+    private var aspectRatioConstraint: NSLayoutConstraint? {
+        didSet {
+            if let oldConstraint = oldValue {
+                nasaImageView.removeConstraint(oldConstraint)
+            }
+            
+            if let newConstraint = aspectRatioConstraint {
+                newConstraint.isActive = true
+            }
+        }
+    }
     
     private lazy var activityIndicator = UIActivityIndicatorView()
     
     private lazy var activityIndicatorContainer: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 6
-        view.backgroundColor = .green
+        view.backgroundColor = .gray
         view.isHidden = true
         return view
     }()
     
     private let imageProvider = MoyaProvider<NASAImageRoute>()
+    
+    private weak var delegate: PicCellDelegate?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -46,11 +62,11 @@ class PicCell: UITableViewCell {
         super.prepareForReuse()
         setActivityIndicatorHidden(true)
         nasaImageView.image = nil
-        aspectRatioConstraint?.isActive = false
         aspectRatioConstraint = nil
     }
     
-    func configure(model: ApodModel) {
+    func configure(model: ApodModel, delegate: PicCellDelegate?) {
+        self.delegate = delegate
         loadImage(url: model.url)
     }
 }
@@ -61,9 +77,10 @@ private extension PicCell {
         contentView.addSubview(activityIndicatorContainer)
         activityIndicatorContainer.addSubview(activityIndicator)
         nasaImageView.snp.makeConstraints { (make: ConstraintMaker) in
-            make.leading.trailing.equalToSuperview()
-            make.top.bottom.equalToSuperview().inset(4)
-            make.height.greaterThanOrEqualTo(10)
+            make.leading.trailing.equalToSuperview().inset(8)
+            make.top.equalToSuperview().offset(4)
+            make.bottom.equalToSuperview().inset(4).priority(.high)
+            make.height.greaterThanOrEqualTo(30)
         }
         
         activityIndicatorContainer.snp.makeConstraints { make in
@@ -87,10 +104,13 @@ private extension PicCell {
             case let .success(response):
                 do {
                     let image = try response.mapImage()
-                    let aspectRatio = image.size.height / image.size.width
-                    self.aspectRatioConstraint = self.nasaImageView.heightAnchor.constraint(equalTo: self.nasaImageView.widthAnchor, multiplier: aspectRatio)
-                    self.aspectRatioConstraint?.isActive = true
-                    self.nasaImageView.image = image
+                    self.delegate?.picCell(self, needsUpdateWith: { [weak self] in
+                        guard let self = self else { return }
+                        let aspectRatio = image.size.height / image.size.width
+                        let aspectRatioConstraint = self.nasaImageView.heightAnchor.constraint(equalTo: self.nasaImageView.widthAnchor, multiplier: aspectRatio)
+                        self.aspectRatioConstraint = aspectRatioConstraint
+                        self.nasaImageView.image = image
+                    })
                 } catch {
                     print(error)
                 }

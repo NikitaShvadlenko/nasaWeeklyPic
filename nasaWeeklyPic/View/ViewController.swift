@@ -12,10 +12,11 @@ class ViewController: UIViewController {
  
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.backgroundColor = .blue
+        tableView.backgroundColor = .white
         tableView.dataSource = self
         tableView.register(PicCell.self, forCellReuseIdentifier: "\(PicCell.self)")
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 100
         return tableView
     }()
     
@@ -30,11 +31,12 @@ class ViewController: UIViewController {
     }
 }
 
+// MARK: - Private methods
 private extension ViewController {
     func setupView() {
-        tabBarItem.image = UIImage(systemName: "list.bullet")
+        navigationController?.tabBarItem.image = UIImage(systemName: "list.bullet")
         title = "List"
-        view.backgroundColor = .red
+        view.backgroundColor = .white
         view.addSubview(tableView)
         
         tableView.snp.makeConstraints { make in
@@ -62,6 +64,7 @@ private extension ViewController {
     }
 }
 
+// MARK: - UITableViewDataSource
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         apodModels.count
@@ -71,7 +74,7 @@ extension ViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "\(PicCell.self)", for: indexPath) as? PicCell
         
         let model = apodModels[indexPath.row]
-        cell?.configure(model: model)
+        cell?.configure(model: model, delegate: self)
         
         guard let safeCell = cell else {
             fatalError("Can not deque Cell")
@@ -81,3 +84,11 @@ extension ViewController: UITableViewDataSource {
     
 }
 
+// MARK: - PicCellDelegate
+extension ViewController: PicCellDelegate {
+    func picCell(_ picCell: PicCell, needsUpdateWith closure: () -> Void) {
+        tableView.beginUpdates()
+        closure()
+        tableView.endUpdates()
+    }
+}

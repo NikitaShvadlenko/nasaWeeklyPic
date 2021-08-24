@@ -3,16 +3,21 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		B43B3F1926D43FED003ABC08 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43B3F1826D43FED003ABC08 /* AppDelegate.swift */; };
 		B43B3F1B26D43FED003ABC08 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43B3F1A26D43FED003ABC08 /* SceneDelegate.swift */; };
 		B43B3F1D26D43FED003ABC08 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43B3F1C26D43FED003ABC08 /* ViewController.swift */; };
-		B43B3F2026D43FED003ABC08 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B43B3F1E26D43FED003ABC08 /* Main.storyboard */; };
 		B43B3F2226D43FF7003ABC08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B43B3F2126D43FF7003ABC08 /* Assets.xcassets */; };
 		B43B3F2526D43FF7003ABC08 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B43B3F2326D43FF7003ABC08 /* LaunchScreen.storyboard */; };
+		B43B3F2E26D44538003ABC08 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B43B3F2D26D44538003ABC08 /* SnapKit */; };
+		B43B3F3026D448F9003ABC08 /* PicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43B3F2F26D448F9003ABC08 /* PicCell.swift */; };
+		B43B3F3326D452BA003ABC08 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = B43B3F3226D452BA003ABC08 /* Moya */; };
+		B43B3F3726D45596003ABC08 /* OpenNasaRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43B3F3626D45596003ABC08 /* OpenNasaRoute.swift */; };
+		B43B3F3B26D4605F003ABC08 /* ApodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43B3F3A26D4605F003ABC08 /* ApodModel.swift */; };
+		B43B3F3D26D46AEC003ABC08 /* NASAImageRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43B3F3C26D46AEC003ABC08 /* NASAImageRoute.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,10 +25,13 @@
 		B43B3F1826D43FED003ABC08 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B43B3F1A26D43FED003ABC08 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		B43B3F1C26D43FED003ABC08 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		B43B3F1F26D43FED003ABC08 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B43B3F2126D43FF7003ABC08 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B43B3F2426D43FF7003ABC08 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B43B3F2626D43FF7003ABC08 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B43B3F2F26D448F9003ABC08 /* PicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PicCell.swift; sourceTree = "<group>"; };
+		B43B3F3626D45596003ABC08 /* OpenNasaRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenNasaRoute.swift; sourceTree = "<group>"; };
+		B43B3F3A26D4605F003ABC08 /* ApodModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApodModel.swift; sourceTree = "<group>"; };
+		B43B3F3C26D46AEC003ABC08 /* NASAImageRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NASAImageRoute.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +39,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B43B3F3326D452BA003ABC08 /* Moya in Frameworks */,
+				B43B3F2E26D44538003ABC08 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,13 +68,24 @@
 			children = (
 				B43B3F1826D43FED003ABC08 /* AppDelegate.swift */,
 				B43B3F1A26D43FED003ABC08 /* SceneDelegate.swift */,
-				B43B3F1C26D43FED003ABC08 /* ViewController.swift */,
-				B43B3F1E26D43FED003ABC08 /* Main.storyboard */,
+				B43B3F3526D45469003ABC08 /* View */,
 				B43B3F2126D43FF7003ABC08 /* Assets.xcassets */,
+				B43B3F3626D45596003ABC08 /* OpenNasaRoute.swift */,
+				B43B3F3C26D46AEC003ABC08 /* NASAImageRoute.swift */,
 				B43B3F2326D43FF7003ABC08 /* LaunchScreen.storyboard */,
+				B43B3F3A26D4605F003ABC08 /* ApodModel.swift */,
 				B43B3F2626D43FF7003ABC08 /* Info.plist */,
 			);
 			path = nasaWeeklyPic;
+			sourceTree = "<group>";
+		};
+		B43B3F3526D45469003ABC08 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B43B3F1C26D43FED003ABC08 /* ViewController.swift */,
+				B43B3F2F26D448F9003ABC08 /* PicCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +104,10 @@
 			dependencies = (
 			);
 			name = nasaWeeklyPic;
+			packageProductDependencies = (
+				B43B3F2D26D44538003ABC08 /* SnapKit */,
+				B43B3F3226D452BA003ABC08 /* Moya */,
+			);
 			productName = nasaWeeklyPic;
 			productReference = B43B3F1526D43FED003ABC08 /* nasaWeeklyPic.app */;
 			productType = "com.apple.product-type.application";
@@ -110,6 +135,10 @@
 				Base,
 			);
 			mainGroup = B43B3F0C26D43FEC003ABC08;
+			packageReferences = (
+				B43B3F2C26D44538003ABC08 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				B43B3F3126D452BA003ABC08 /* XCRemoteSwiftPackageReference "Moya" */,
+			);
 			productRefGroup = B43B3F1626D43FED003ABC08 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -126,7 +155,6 @@
 			files = (
 				B43B3F2526D43FF7003ABC08 /* LaunchScreen.storyboard in Resources */,
 				B43B3F2226D43FF7003ABC08 /* Assets.xcassets in Resources */,
-				B43B3F2026D43FED003ABC08 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,8 +165,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B43B3F3B26D4605F003ABC08 /* ApodModel.swift in Sources */,
+				B43B3F3D26D46AEC003ABC08 /* NASAImageRoute.swift in Sources */,
+				B43B3F3026D448F9003ABC08 /* PicCell.swift in Sources */,
 				B43B3F1D26D43FED003ABC08 /* ViewController.swift in Sources */,
 				B43B3F1926D43FED003ABC08 /* AppDelegate.swift in Sources */,
+				B43B3F3726D45596003ABC08 /* OpenNasaRoute.swift in Sources */,
 				B43B3F1B26D43FED003ABC08 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -146,14 +178,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		B43B3F1E26D43FED003ABC08 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B43B3F1F26D43FED003ABC08 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		B43B3F2326D43FF7003ABC08 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -341,6 +365,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B43B3F2C26D44538003ABC08 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.1;
+			};
+		};
+		B43B3F3126D452BA003ABC08 /* XCRemoteSwiftPackageReference "Moya" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Moya/Moya";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 14.0.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B43B3F2D26D44538003ABC08 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B43B3F2C26D44538003ABC08 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		B43B3F3226D452BA003ABC08 /* Moya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B43B3F3126D452BA003ABC08 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = Moya;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B43B3F0D26D43FEC003ABC08 /* Project object */;
 }

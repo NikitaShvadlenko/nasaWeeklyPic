@@ -45,7 +45,7 @@ private extension ViewController {
     }
     
     func fetchData() {
-        nasaProvider.request(.apod(count: 2)) { [weak self] result in
+        nasaProvider.request(.apod(startDateString: "2021-08-20", endDateString: "2021-08-27")) { [weak self] result in
             switch result {
             case let .success(response):
                 do {
@@ -58,6 +58,7 @@ private extension ViewController {
                 
                 
             case .failure(let error):
+               print (error)
                 break
             }
         }

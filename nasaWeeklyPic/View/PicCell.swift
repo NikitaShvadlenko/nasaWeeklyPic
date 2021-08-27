@@ -14,7 +14,11 @@ protocol PicCellDelegate: AnyObject {
 }
 
 class PicCell: UITableViewCell {
-    
+    private lazy var dateLabel: UILabel = {
+        let dateLabel = UILabel()
+        dateLabel.backgroundColor = .black
+        return dateLabel
+    }()
     private lazy var nasaImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .gray

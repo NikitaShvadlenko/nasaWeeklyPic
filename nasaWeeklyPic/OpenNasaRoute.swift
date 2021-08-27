@@ -8,7 +8,7 @@ import Foundation
 import Moya
 
 enum OpenNasaRoute {
-    case apod(count: Int)
+    case apod(startDateString: String, endDateString: String)
 }
 
 extension OpenNasaRoute: TargetType {
@@ -36,10 +36,11 @@ extension OpenNasaRoute: TargetType {
     
     var task: Task {
         switch self {
-        case let .apod(count):
+        case let .apod(startDateString, endDateString):
             let parameters: [String: Any] = [
                 "api_key": "DEMO_KEY",
-                "count": count
+                "start_date": startDateString,
+                "end_date": endDateString
             ]
             return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
         }

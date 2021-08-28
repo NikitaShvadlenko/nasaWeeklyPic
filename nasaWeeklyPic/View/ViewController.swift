@@ -9,7 +9,27 @@ import UIKit
 import SnapKit
 
 class ViewController: UIViewController {
- 
+    
+    private lazy var currentDateString: String = {
+        let date = Date()
+        let currentDateString = (dateFormatter.string(from: date))
+        return currentDateString
+    }()
+    
+    private lazy var nextWeekDateString: String = {
+        let date = Date()
+        let calendar = Calendar.current
+        let dateNextWeek = calendar.date(byAdding: .weekOfYear, value: 1, to: Date())
+        let nextWeekDateString = (dateFormatter.string(from: dateNextWeek!))
+        return nextWeekDateString
+    }()
+    
+    private lazy var dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY-MM-dd"
+        return dateFormatter
+    }()
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .white
@@ -26,6 +46,8 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(currentDateString)
+        print(nextWeekDateString)
         setupView()
         fetchData()
     }
@@ -45,7 +67,7 @@ private extension ViewController {
     }
     
     func fetchData() {
-        nasaProvider.request(.apod(startDateString: "2021-08-20", endDateString: "2021-08-27")) { [weak self] result in
+        nasaProvider.request(.apod(startDateString: "2021-07-18", endDateString: "2021-07-24")) { [weak self] result in
             switch result {
             case let .success(response):
                 do {
@@ -55,8 +77,6 @@ private extension ViewController {
                 } catch {
                     print(error)
                 }
-                
-                
             case .failure(let error):
                print (error)
                 break

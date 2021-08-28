@@ -11,15 +11,15 @@ import SnapKit
 class ViewController: UIViewController {
     
     private lazy var currentDateString: String = {
-        let date = Date()
-        let currentDateString = (dateFormatter.string(from: date))
+        let calendar = Calendar.current
+        let date = calendar.date(byAdding: .day, value: -1, to: Date())
+        let currentDateString = (dateFormatter.string(from: date!))
         return currentDateString
     }()
     
     private lazy var nextWeekDateString: String = {
-        let date = Date()
         let calendar = Calendar.current
-        let dateNextWeek = calendar.date(byAdding: .weekOfYear, value: 1, to: Date())
+        let dateNextWeek = calendar.date(byAdding: .weekOfYear, value: -1, to: Date())
         let nextWeekDateString = (dateFormatter.string(from: dateNextWeek!))
         return nextWeekDateString
     }()
@@ -67,7 +67,7 @@ private extension ViewController {
     }
     
     func fetchData() {
-        nasaProvider.request(.apod(startDateString: "2021-07-18", endDateString: "2021-07-24")) { [weak self] result in
+        nasaProvider.request(.apod(startDateString: currentDateString, endDateString: nextWeekDateString)) { [weak self] result in
             switch result {
             case let .success(response):
                 do {

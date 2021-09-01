@@ -84,17 +84,18 @@ private extension PicCell {
             make.leading.trailing.equalToSuperview().inset(8)
             make.top.equalToSuperview().offset(4)
             make.bottom.equalToSuperview().inset(4).priority(.high)
-            make.height.greaterThanOrEqualTo(30)
+            make.height.greaterThanOrEqualTo(100)
+            //Поменял на сто, потому что картинок в 30 просто нет. Я хочу квадраты размером с картинку, пока он прогружает картинку с URL.
         }
         
         activityIndicatorContainer.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.height.width.equalTo(30)
+            make.height.width.equalTo(nasaImageView)
         }
         
-        activityIndicator.snp.makeConstraints { make in
+      /*  activityIndicator.snp.makeConstraints { make in
             make.center.equalToSuperview()
-        }
+        } - Это одни и те же констрейнтсы прописанные дважды?*/
     }
     
     func loadImage(url: URL) {

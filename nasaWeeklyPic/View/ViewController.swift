@@ -10,30 +10,27 @@ import SnapKit
 
 class ViewController: UIViewController {
     
-    private lazy var currentDateString: String = {
-        let calendar = Calendar.current
-        let date = calendar.date(byAdding: .day, value: -1, to: Date())
-        let currentDateString = (dateFormatter.string(from: date!))
-        return currentDateString
-    }()
-    
-    private lazy var nextWeekDateString: String = {
-        let calendar = Calendar.current
-        let dateNextWeek = calendar.date(byAdding: .weekOfYear, value: -1, to: Date())
-        let nextWeekDateString = (dateFormatter.string(from: dateNextWeek!))
-        return nextWeekDateString
-    }()
-    
     private lazy var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "YYYY-MM-dd"
         return dateFormatter
     }()
     
+    let calendar = Calendar.current
+    var requestedNewDataCount = 1
+    
+    private lazy var currentDateString: String = {return dateFormatter.string(from: calendar.date(byAdding: .day, value: -1, to: Date())!)}()
+    
+    private lazy var lastWeekDateString: String = {
+        return dateFormatter.string(from: calendar.date(byAdding: .weekOfYear, value: -1, to: Date())! )}()
+
+    var fetchingMoreData = false
+
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .white
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.register(PicCell.self, forCellReuseIdentifier: "\(PicCell.self)")
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
@@ -46,8 +43,6 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(currentDateString)
-        print(nextWeekDateString)
         setupView()
         fetchData()
     }
@@ -67,7 +62,7 @@ private extension ViewController {
     }
     
     func fetchData() {
-        nasaProvider.request(.apod(startDateString: currentDateString, endDateString: nextWeekDateString)) { [weak self] result in
+        nasaProvider.request(.apod(startDateString: lastWeekDateString, endDateString: currentDateString)) { [weak self] result in
             switch result {
             case let .success(response):
                 do {
@@ -82,6 +77,14 @@ private extension ViewController {
                 break
             }
         }
+    }
+    func getNewDates()  {
+        requestedNewDataCount += 1
+        var lastWeekDate = calendar.date(byAdding: .weekOfYear, value: -1, to: Date())!
+        let currentDate = lastWeekDate
+        lastWeekDate = calendar.date(byAdding: .weekOfYear, value: -1 * requestedNewDataCount, to: Date())!
+         currentDateString = (dateFormatter.string(from: currentDate))
+         lastWeekDateString = (dateFormatter.string(from: lastWeekDate))
     }
 }
 
@@ -111,5 +114,27 @@ extension ViewController: PicCellDelegate {
         tableView.beginUpdates()
         closure()
         tableView.endUpdates()
+    }
+}
+
+//MARK: - UITableViewDelegate
+extension ViewController: UITableViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        print(offsetY)
+        print(contentHeight)
+        if offsetY > contentHeight - scrollView.frame.height {
+            if !fetchingMoreData {
+                fetchMoreData()
+            }
+        }
+        func fetchMoreData() {
+            fetchingMoreData = true
+            print("Aked for more data")
+            getNewDates()
+            fetchData()
+            fetchingMoreData = false
+        }
     }
 }

@@ -14,6 +14,10 @@ protocol PicCellDelegate: AnyObject {
 }
 
 class PicCell: UITableViewCell {
+    
+    let cacheProvider = CacheProvider()
+    //let imageCache = NSCache<AnyObject, AnyObject>()
+    
     private lazy var dateLabel: UILabel = {
         let dateLabel = UILabel()
         dateLabel.backgroundColor = .black
@@ -71,7 +75,10 @@ class PicCell: UITableViewCell {
     
     func configure(model: ApodModel, delegate: PicCellDelegate?) {
         self.delegate = delegate
+        //Тут должна быть проверка, есть ли юрл такой в Key кэша.
+        
         loadImage(url: model.url)
+        //Тут он должен сохранять картинку в кэш, если картинки еще не было
     }
 }
 
@@ -99,11 +106,9 @@ private extension PicCell {
     }
     
     func loadImage(url: URL) {
-        // TODO: show loading indicator here
         setActivityIndicatorHidden(false)
         imageProvider.request(.image(url: url)) { [weak self] result in
             guard let self = self else { return }
-            // TODO: hide loading indicator here, as by this moment image loading has finished
             self.setActivityIndicatorHidden(true)
             switch result {
             case let .success(response):
@@ -115,6 +120,8 @@ private extension PicCell {
                         let aspectRatioConstraint = self.nasaImageView.heightAnchor.constraint(equalTo: self.nasaImageView.widthAnchor, multiplier: aspectRatio)
                         self.aspectRatioConstraint = aspectRatioConstraint
                         self.nasaImageView.image = image
+                        self.cacheProvider.addToCache(picUrl: url, data: image)
+                        print (self.cacheProvider.cache.keys)
                     })
                 } catch {
                     print(error)
@@ -135,3 +142,5 @@ private extension PicCell {
         }
     }
 }
+
+

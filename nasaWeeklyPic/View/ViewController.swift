@@ -10,6 +10,8 @@ import SnapKit
 
 class ViewController: UIViewController {
     
+    let cacheProvider = CacheProvider()
+    
     private lazy var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "YYYY-MM-dd"
@@ -95,8 +97,8 @@ extension ViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //Согласно сообщению, я проверку кэша должен написать вот сюда, но тут нет Data, тут только модель.  Зачем во вью контроллер создавать Кэш провайдер? Можно же просто в сетапе ячейки, но не тут. 
         let cell = tableView.dequeueReusableCell(withIdentifier: "\(PicCell.self)", for: indexPath) as? PicCell
-        
         let model = apodModels[indexPath.row]
         cell?.configure(model: model, delegate: self)
         

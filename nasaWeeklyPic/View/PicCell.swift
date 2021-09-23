@@ -9,6 +9,8 @@ import UIKit
 import SnapKit
 import Moya
 
+let cacheProvider = CacheProvider()
+
 protocol PicCellDelegate: AnyObject {
     func picCell(_ picCell: PicCell, needsUpdateWith closure: () -> Void)
 }
@@ -84,8 +86,7 @@ private extension PicCell {
             make.leading.trailing.equalToSuperview().inset(8)
             make.top.equalToSuperview().offset(4)
             make.bottom.equalToSuperview().inset(4).priority(.high)
-            make.height.greaterThanOrEqualTo(100)
-            //Поменял на сто, потому что картинок в 30 просто нет. Я хочу квадраты размером с картинку, пока он прогружает картинку с URL.
+            make.height.greaterThanOrEqualTo(30)
         }
         
         activityIndicatorContainer.snp.makeConstraints { make in
@@ -99,6 +100,13 @@ private extension PicCell {
     }
     
     func loadImage(url: URL) {
+        if let imageData = cacheProvider.retrieve(key: url.absoluteString) {
+            //ТУТ НЕ IMAGE DATA должно быть
+            let image = UIImage(data: imageData)
+            nasaImageView.image = image
+            print("retrieved")
+            return
+        }
         // TODO: show loading indicator here
         setActivityIndicatorHidden(false)
         imageProvider.request(.image(url: url)) { [weak self] result in
@@ -108,11 +116,15 @@ private extension PicCell {
             switch result {
             case let .success(response):
                 do {
+                    cacheProvider.save(key: url.absoluteString, value: response.data)
+                    print("Saved to cache")
                     let image = try response.mapImage()
                     self.delegate?.picCell(self, needsUpdateWith: { [weak self] in
                         guard let self = self else { return }
                         let aspectRatio = image.size.height / image.size.width
-                        let aspectRatioConstraint = self.nasaImageView.heightAnchor.constraint(equalTo: self.nasaImageView.widthAnchor, multiplier: aspectRatio)
+                        let aspectRatioConstraint = self.nasaImageView.heightAnchor.constraint(equalTo:
+                        //возможно, ошибка вот тут. Будто не хватает одного шага. 
+                        self.nasaImageView.widthAnchor, multiplier: aspectRatio)
                         self.aspectRatioConstraint = aspectRatioConstraint
                         self.nasaImageView.image = image
                     })

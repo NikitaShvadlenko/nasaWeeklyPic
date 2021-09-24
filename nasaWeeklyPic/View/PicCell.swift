@@ -47,6 +47,8 @@ class PicCell: UITableViewCell {
     
     private let imageProvider = MoyaProvider<NASAImageRoute>()
     
+    private weak var cacheProvider: CacheProviderProtocol?
+    
     private weak var delegate: PicCellDelegate?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -65,7 +67,8 @@ class PicCell: UITableViewCell {
         aspectRatioConstraint = nil
     }
     
-    func configure(model: ApodModel, delegate: PicCellDelegate?) {
+    func configure(model: ApodModel, cacheProvider: CacheProviderProtocol?, delegate: PicCellDelegate?) {
+        self.cacheProvider = cacheProvider
         self.delegate = delegate
         loadImage(url: model.url)
     }
@@ -94,7 +97,14 @@ private extension PicCell {
     }
     
     func loadImage(url: URL) {
-        // TODO: show loading indicator here
+        if let imageData = cacheProvider?.retrieve(key: url),
+           let image = UIImage(data: imageData) {
+            let aspectRatio = image.size.height / image.size.width
+            let aspectRatioConstraint = self.nasaImageView.heightAnchor.constraint(equalTo: self.nasaImageView.widthAnchor, multiplier: aspectRatio)
+            self.aspectRatioConstraint = aspectRatioConstraint
+            self.nasaImageView.image = image
+            return
+        }
         setActivityIndicatorHidden(false)
         imageProvider.request(.image(url: url)) { [weak self] result in
             guard let self = self else { return }
@@ -104,6 +114,7 @@ private extension PicCell {
             case let .success(response):
                 do {
                     let image = try response.mapImage()
+                    self.cacheProvider?.save(key: url, value: response.data)
                     self.delegate?.picCell(self, needsUpdateWith: { [weak self] in
                         guard let self = self else { return }
                         let aspectRatio = image.size.height / image.size.width

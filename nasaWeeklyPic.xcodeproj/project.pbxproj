@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A404FB126FC37820099D2A3 /* CacheProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A404FB026FC37820099D2A3 /* CacheProvider.swift */; };
 		B43B3F1926D43FED003ABC08 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43B3F1826D43FED003ABC08 /* AppDelegate.swift */; };
 		B43B3F1B26D43FED003ABC08 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43B3F1A26D43FED003ABC08 /* SceneDelegate.swift */; };
 		B43B3F1D26D43FED003ABC08 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43B3F1C26D43FED003ABC08 /* ViewController.swift */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4A404FB026FC37820099D2A3 /* CacheProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheProvider.swift; sourceTree = "<group>"; };
 		B43B3F1526D43FED003ABC08 /* nasaWeeklyPic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nasaWeeklyPic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B43B3F1826D43FED003ABC08 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B43B3F1A26D43FED003ABC08 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 				B43B3F3C26D46AEC003ABC08 /* NASAImageRoute.swift */,
 				B43B3F2326D43FF7003ABC08 /* LaunchScreen.storyboard */,
 				B43B3F3A26D4605F003ABC08 /* ApodModel.swift */,
+				4A404FB026FC37820099D2A3 /* CacheProvider.swift */,
 				B43B3F2626D43FF7003ABC08 /* Info.plist */,
 			);
 			path = nasaWeeklyPic;
@@ -170,6 +173,7 @@
 				B43B3F3026D448F9003ABC08 /* PicCell.swift in Sources */,
 				B43B3F1D26D43FED003ABC08 /* ViewController.swift in Sources */,
 				B43B3F1926D43FED003ABC08 /* AppDelegate.swift in Sources */,
+				4A404FB126FC37820099D2A3 /* CacheProvider.swift in Sources */,
 				B43B3F3726D45596003ABC08 /* OpenNasaRoute.swift in Sources */,
 				B43B3F1B26D43FED003ABC08 /* SceneDelegate.swift in Sources */,
 			);

@@ -22,6 +22,8 @@ class ViewController: UIViewController {
     
     private let nasaProvider = MoyaProvider<OpenNasaRoute>()
     
+    private var cacheProvider: CacheProviderProtocol? = CacheProvider()
+    
     var apodModels: [ApodModel] = []
     
     override func viewDidLoad() {
@@ -45,7 +47,7 @@ private extension ViewController {
     }
     
     func fetchData() {
-        nasaProvider.request(.apod(count: 2)) { [weak self] result in
+        nasaProvider.request(.apod(count: 10)) { [weak self] result in
             switch result {
             case let .success(response):
                 do {
@@ -74,7 +76,7 @@ extension ViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "\(PicCell.self)", for: indexPath) as? PicCell
         
         let model = apodModels[indexPath.row]
-        cell?.configure(model: model, delegate: self)
+        cell?.configure(model: model, cacheProvider: cacheProvider, delegate: self)
         
         guard let safeCell = cell else {
             fatalError("Can not deque Cell")
